@@ -4,6 +4,7 @@ import Dashboard from "../layouts/DashboardLayout/Dashboard.vue";
 import {useUserStore} from "../store/userStore.js";
 import Register from "../layouts/GuestLayout/Register.vue";
 import MainLayout from "../layouts/GuestLayout/MainLayout.vue";
+import ChatContainer from "../layouts/DashboardLayout/ChatContainer.vue";
 
 const routes = createRouter({
     history: createWebHistory(),
@@ -31,6 +32,12 @@ const routes = createRouter({
             path: '/dashboard',
             component: Dashboard,
             name: 'dashboard',
+            meta: {guest: false, auth: true}
+        },
+        {
+            path: '/chat/:id',
+            component: ChatContainer,
+            name: 'chat',
             meta: {guest: false, auth: true}
         }
     ]
