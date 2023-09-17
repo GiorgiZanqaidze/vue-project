@@ -2,7 +2,7 @@
 
 import {useRouter} from 'vue-router'
 import {useUserStore} from "../../store/userStore.js";
-import {reactive, ref, watch} from "vue";
+import {reactive} from "vue";
 import searchUser from "../../services/searchUser.js";
 
 const router = useRouter()
@@ -46,9 +46,7 @@ function textToUser(toUserId) {
     <button @click="logOut()">Log Out</button>
     <br>
     <label for="search">Search</label>
-    <form @submit.prevent="search()">
-      <input type="text" id="search" v-model="form.name" class="bg-blue-300" @input="changeVal" placeholder="search">
-    </form>
+    <input type="text" id="search" v-model="form.name" class="bg-blue-300" @input="changeVal" placeholder="search">
     <li v-for="user in form?.target" @click="textToUser(user.id)">
       <button>{{user.name}}</button>
     </li>
