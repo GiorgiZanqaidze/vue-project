@@ -40,16 +40,24 @@ function textToUser(toUserId) {
 </script>
 
 <template>
+  <div>
+    <div>
+      <h1>cHAT</h1>
+    </div>
+    <div>
+      <input type="text" name="search" id="search" placeholder="search user" v-model="form.name" @input="changeVal()" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+    </div>
+  </div>
   <h1>
     name: {{userStore?.user?.data?.name}}
     <br>
     <button @click="logOut()">Log Out</button>
     <br>
     <label for="search">Search</label>
-    <input type="text" id="search" v-model="form.name" class="bg-blue-300" @input="changeVal" placeholder="search">
     <li v-for="user in form?.target" @click="textToUser(user.id)">
       <button>{{user.name}}</button>
     </li>
+    <router-view></router-view>
   </h1>
 
 </template>

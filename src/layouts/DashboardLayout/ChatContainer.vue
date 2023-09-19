@@ -45,13 +45,13 @@ async function submitText() {
         <div v-if="message.sender_id === authUser.user.data.id" class="text-right">Me <p>{{message.content}}</p></div>
         <div v-else >{{ message.sender.name }}
           <p>{{message.content}}</p></div>
-
       </li>
     </ul>
   </div>
   <form @submit.prevent="submitText()">
     <input type="text" name="text" id="text" placeholder="text to user" v-model="data.text" class="bg-amber-200"/>
   </form>
+
 </template>
 
 <style scoped>

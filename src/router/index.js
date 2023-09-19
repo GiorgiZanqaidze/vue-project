@@ -32,14 +32,16 @@ const routes = createRouter({
             path: '/dashboard',
             component: Dashboard,
             name: 'dashboard',
-            meta: {guest: false, auth: true}
+            meta: {guest: false, auth: true},
+            children: [
+                {
+                    path: '/chat/:id',
+                    component: ChatContainer,
+                    name: 'chat',
+                }
+            ]
         },
-        {
-            path: '/chat/:id',
-            component: ChatContainer,
-            name: 'chat',
-            meta: {guest: false, auth: true}
-        }
+
     ]
 })
 
