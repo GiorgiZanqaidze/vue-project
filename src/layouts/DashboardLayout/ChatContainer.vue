@@ -1,7 +1,7 @@
 <script setup>
 import getChatUser from "../../services/getChatUser.js";
 import {onMounted, reactive} from "vue";
-import {useRoute} from "vue-router";
+import {onBeforeRouteUpdate, useRoute} from "vue-router";
 import getChatMessages from "../../services/getChatMessages.js";
 import {useUserStore} from "../../store/userStore.js";
 import postMessage from "../../services/postMessage.js";
@@ -17,11 +17,15 @@ const data = reactive({
 
 const route = useRoute()
 
-onMounted(async() => {
+async function getChatData() {
   const user = await getChatUser(route.params.id)
   const messages = await getChatMessages(route.params.id, authUser.user.data.id)
   data.messages = messages
   data.chatWithUser = user.data
+}
+
+onMounted(async() => {
+  await getChatData()
 })
 
 
@@ -34,6 +38,11 @@ async function submitText() {
       }
   )
 }
+
+onBeforeRouteUpdate(async (to, from, next) => {
+  await getChatData()
+  next();
+})
 
 </script>
 

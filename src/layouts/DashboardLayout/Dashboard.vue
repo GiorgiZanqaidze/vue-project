@@ -1,13 +1,13 @@
 <script setup>
 
-import {useRouter} from 'vue-router'
+import {useRouter, useRoute, onBeforeRouteUpdate} from 'vue-router'
 import {useUserStore} from "../../store/userStore.js";
-import {reactive} from "vue";
+import {onMounted, reactive, watch} from "vue";
 import searchUser from "../../services/searchUser.js";
-
 const router = useRouter()
 
 const userStore = useUserStore()
+const route = useRoute()
 
 async function logOut() {
     await userStore.logoutUser()
@@ -32,6 +32,9 @@ function changeVal() {
     }, 1000);
   }
 }
+
+
+
 
 function textToUser(toUserId) {
     router.push({name: 'chat', params: {id: toUserId}})

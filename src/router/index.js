@@ -35,7 +35,7 @@ const routes = createRouter({
             meta: {guest: false, auth: true},
             children: [
                 {
-                    path: '/chat/:id',
+                    path: 'chat/:id',
                     component: ChatContainer,
                     name: 'chat',
                 }
