@@ -1,13 +1,15 @@
 <script setup>
 
-import {useRouter, useRoute, onBeforeRouteUpdate} from 'vue-router'
+import {useRouter} from 'vue-router'
 import {useUserStore} from "../../store/userStore.js";
 import {onMounted, reactive, watch} from "vue";
 import searchUser from "../../services/searchUser.js";
+import getAllUsers from "../../services/getAllUsers.js";
+import UsersList from "./UsersList.vue";
+import SearchedUsers from "./SearchedUsers.vue";
 const router = useRouter()
 
 const userStore = useUserStore()
-const route = useRoute()
 
 async function logOut() {
     await userStore.logoutUser()
@@ -34,7 +36,14 @@ function changeVal() {
 }
 
 
+async function getUsers() {
 
+}
+
+onMounted(async() => {
+  const usersData = await getAllUsers()
+  console.log(usersData)
+})
 
 function textToUser(toUserId) {
     router.push({name: 'chat', params: {id: toUserId}})
@@ -43,25 +52,21 @@ function textToUser(toUserId) {
 </script>
 
 <template>
-  <div>
-    <div>
-      <h1>cHAT</h1>
-    </div>
-    <div>
-      <input type="text" name="search" id="search" placeholder="search user" v-model="form.name" @input="changeVal()" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+  <div >
+    <div class="max-w-7xl mx-auto flex justify-between">
+      <div class="bg-red-500">
+        <div>
+          <input type="text" name="search" id="search" placeholder="search user" v-model="form.name" @input="changeVal()" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+        </div>
+        <searched-users v-if="form?.target" :data="form?.target" @get-user="textToUser"></searched-users>
+        <users-list v-else></users-list>
+      </div>
+      <div class="w-2/3">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
-  <h1>
-    name: {{userStore?.user?.data?.name}}
-    <br>
-    <button @click="logOut()">Log Out</button>
-    <br>
-    <label for="search">Search</label>
-    <li v-for="user in form?.target" @click="textToUser(user.id)">
-      <button>{{user.name}}</button>
-    </li>
-    <router-view></router-view>
-  </h1>
+
 
 </template>
 
